@@ -5,6 +5,3 @@
 # IDEA files
 *.iml
 /.idea
-
-# env file
-.env
