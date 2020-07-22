@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command":["RUST_LOG=debug cargo run"],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "build",
+			"label": "RUST_LOG=debug cargo run - rust-warp-sqlx-backend"
+		},{
+			"type": "shell",
+			"command":["cargo build"],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "build",
+			"label": "cargo build - rust-warp-sqlx-backend"
+		}
+	]
+}
