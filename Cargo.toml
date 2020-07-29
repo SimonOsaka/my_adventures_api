@@ -6,7 +6,6 @@ edition = "2018"
 
 [dependencies]
 chrono = "0.4.13"
-# diesel = { version = "=1.4.3", features = ["chrono", "mysql", "r2d2", "uuidv07", "serde_json"] }
 dotenv = "0.15.0"
 pretty_env_logger = "0.4.0"
 log = "0.4"
@@ -17,7 +16,6 @@ tokio = { version = "0.2.22", features = ["macros"] }
 uuid = { version = "0.8.1", features = ["serde", "v4"] }
 async-trait = "0.1"
 warp = "0.2.4"
-# warp = { git = "https://github.com/cjbassi/warp", branch = "error" }
 
 db = { package = "realworld-db", path = "./src/db" }
 domain = { package = "realworld-domain", path = "./src/domain" }

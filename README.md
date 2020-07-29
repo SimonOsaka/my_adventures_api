@@ -1,53 +1,39 @@
-# ![RealWorld Example App](logo.png)
+# 我的奇遇记，后台
 
-An async Rust REST API backend using [Warp](https://github.com/seanmonstar/warp), [Diesel](https://github.com/diesel-rs/diesel), Postgres, and JWT that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
+#### 项目结构
+- handlers代表http服务内容
+- domain代表域对象和逻辑定义
+- db代表对数据操作
 
-Includes real world examples for CRUD operations, authentication, routing, and pagination.
+#### 运行命令
+1. 开发运行命令`cargo run`
+2. 打包`cargo build --release`
 
-For more information on how this works with various frontends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
+#### 第三方依赖
+- warp
+- sqlx
+- chrono
+- serde
+- serde_json
+- jsonwebtoken
+- tokio
+- dotenv
+- pretty_env_logger
+- log
+- async-trait
 
-Originally forked from https://github.com/colinbankier/realworld-tide.
-
-## Getting started
-
-- Install the [Diesel CLI](https://github.com/diesel-rs/diesel/tree/master/diesel_cli) with the `postgres` feature enabled.
-- Start a postgres database by running `docker-compose up -d` (requires `docker-compose`) or use your own method.
-- Copy [`.env.example`](./.env.example) to `.env` and change any environment variables accordingly to your system.
-- Setup the database by running `diesel database setup`.
-- When you are done, stop the database with `docker-compose stop`.
-
-The URL of the API will be the value of `BIND_ADDRESS` in `.env` along with `/api`, e.g. `https://127.0.0.1:8088/api`.
-
-To test the API, RealWorld provides a [Postman collection](https://github.com/gothinkster/realworld/blob/master/api/Conduit.postman_collection.json) that we can use.
-
-To run the tests, do the following:
-
-```bash
-git clone https://github.com/gothinkster/realworld
-cd realworld/api
-APIURL=http://localhost:8088/api ./run-api-tests.sh
+#### linux
+```shell
+nohup ./rust-warp-sqlx-backend &
 ```
 
-## Libraries used
+#### vscode插件
+**项目根目录.vscode文件夹**
+- extensions.json
 
-- [chrono](https://github.com/chronotope/chrono)
-- [diesel](https://github.com/diesel-rs/diesel)
-- [dotenv](https://github.com/dotenv-rs/dotenv)
-- [env_logger](https://github.com/sebasmagri/env_logger/)
-- [jsonwebtoken](https://github.com/Keats/jsonwebtoken)
-- [r2d2](https://github.com/sfackler/r2d2)
-- [rust-bcrypt](https://github.com/Keats/rust-bcrypt)
-- [serde](https://github.com/serde-rs/serde)
-- [tokio](https://github.com/tokio-rs/tokio)
-- [uuid](https://github.com/uuid-rs/uuid)
-- [warp](https://github.com/seanmonstar/warp)
+**便捷命令执行**
+- commandbar.json
 
-## Note on session management
-
-We use JWT to comply with the RealWorld specification, however in practice you should not use JWT for session management. Instead you should use persistent or session cookies with server-side session management.
-
-For reference: [Stop Using JWT for sessions and why your solution doesn't work](http://cryto.net/~joepie91/blog/2016/06/19/stop-using-jwt-for-sessions-part-2-why-your-solution-doesnt-work/).
-
-## Limitations
-
-Currently, r2d2 and Diesel are both synchronous.
+**开发调试**
+- 启动debug：launch.json
+- 任务：tasks.json
