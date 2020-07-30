@@ -60,7 +60,19 @@ pub mod my_item_type_format {
             2 => HAHA.to_owned(),
             3 => GAME.to_owned(),
             4 => FILM_TV.to_owned(),
-            _ => NONE.to_owned()
+            _ => NONE.to_owned(),
+        }
+    }
+}
+
+pub mod my_source {
+    const DOUYIN: &'static str = "抖音";
+    const NONE: &'static str = "";
+
+    pub fn to_source_name(source: u8) -> String {
+        match source {
+            1 => DOUYIN.to_owned(),
+            _ => NONE.to_owned(),
         }
     }
 }

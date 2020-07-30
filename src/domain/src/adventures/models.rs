@@ -16,6 +16,7 @@ pub struct Adventures {
     pub created_at: DateTime<FixedOffset>,
     pub item_type: u8,
     pub link: String,
+    pub source: u8,
 }
 
 #[derive(Clone, Debug, PartialEq)]

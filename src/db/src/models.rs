@@ -22,6 +22,7 @@ pub struct MyAdventures {
     pub is_deleted: u8,
     pub item_type: u8,
     pub link: String,
+    pub source: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]

@@ -46,6 +46,7 @@ impl domain::repositories::Repository for Repository {
                 created_at: DateTimeUtils::beijing(m.created_at),
                 item_type: m.item_type,
                 link: m.link,
+                source: m.source,
             })
             .collect();
         Ok(result)
@@ -94,6 +95,7 @@ impl domain::repositories::Repository for Repository {
                 created_at: DateTimeUtils::beijing(ad.created_at),
                 item_type: ad.item_type,
                 link: ad.link,
+                source: ad.source,
             }),
             _ => None,
         };
