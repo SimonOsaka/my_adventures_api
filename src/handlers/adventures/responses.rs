@@ -1,4 +1,4 @@
-use crate::handlers::{my_date_format, my_item_type_format, my_source};
+use crate::handlers::{my_date_format, my_item_type_format, my_journey_destiny, my_source};
 use chrono::{DateTime, FixedOffset};
 use serde::{Deserialize, Serialize};
 
@@ -23,7 +23,9 @@ impl From<Vec<domain::Adventures>> for AdventuresResponse {
                 item_type: a.item_type,
                 item_type_name: my_item_type_format::to_item_type_name(a.item_type),
                 link: a.link,
+                source: a.source,
                 source_name: my_source::to_source_name(a.source),
+                journey_destiny_name: my_journey_destiny::to_name(&a.journey_destiny),
             })
             .collect();
         Self {
@@ -50,7 +52,9 @@ impl From<domain::Adventures> for AdventureResponse {
             item_type: ad.item_type,
             item_type_name: my_item_type_format::to_item_type_name(ad.item_type),
             link: ad.link,
+            source: ad.source,
             source_name: my_source::to_source_name(ad.source),
+            journey_destiny_name: my_journey_destiny::to_name(&ad.journey_destiny),
         };
         Self { adventure }
     }
@@ -68,7 +72,9 @@ pub struct Adventures {
     pub item_type: u8,
     pub item_type_name: String,
     pub link: String,
+    pub source: u8,
     pub source_name: String,
+    pub journey_destiny_name: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

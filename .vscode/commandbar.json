@@ -4,24 +4,34 @@
 	"skipErrorMessage": false,
 	"commands": [
         {
-            "text": "▶︎ Cargo Run with Task",
+            "text": "▶︎ cargo run",
             "color": "lightgreen",
             "tooltip": "workbench.action.tasks.runTask|RUST_LOG=debug cargo run - rust-warp-sqlx-backend",
             "language": "rust",
             "commandType": "palette",
             "command": "workbench.action.tasks.runTask|RUST_LOG=debug cargo run - rust-warp-sqlx-backend",
             "alignment": "left",
-            "priority": 1
+            "priority": 10
         },
         {
-            "text": "▷ Cargo Build with Task",
+            "text": "▷ cargo build",
             "color": "yellow",
             "tooltip": "workbench.action.tasks.runTask|cargo build - rust-warp-sqlx-backend",
             "language": "rust",
             "commandType": "palette",
             "command": "workbench.action.tasks.runTask|cargo build - rust-warp-sqlx-backend",
             "alignment": "left",
-            "priority": 2
+            "priority": 9
+        },
+        {
+            "text": "⚡︎ cargo build --release linux",
+            "color": "pink",
+            "tooltip": "workbench.action.tasks.runTask|cargo build --release --target=x86_64-unknown-linux-musl",
+            "language": "rust",
+            "commandType": "palette",
+            "command": "workbench.action.tasks.runTask|cargo build --release --target=x86_64-unknown-linux-musl",
+            "alignment": "left",
+            "priority": 8
         }
 	]
 }

@@ -47,6 +47,7 @@ impl domain::repositories::Repository for Repository {
                 item_type: m.item_type,
                 link: m.link,
                 source: m.source,
+                journey_destiny: m.journey_destiny,
             })
             .collect();
         Ok(result)
@@ -96,6 +97,7 @@ impl domain::repositories::Repository for Repository {
                 item_type: ad.item_type,
                 link: ad.link,
                 source: ad.source,
+                journey_destiny: ad.journey_destiny,
             }),
             _ => None,
         };

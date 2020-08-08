@@ -23,6 +23,7 @@ pub struct MyAdventures {
     pub item_type: u8,
     pub link: String,
     pub source: u8,
+    pub journey_destiny: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
