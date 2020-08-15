@@ -48,7 +48,7 @@ pub mod my_date_format {
 
 pub mod my_item_type_format {
 
-    const ADVENTURE: &'static str = "探险";
+    const ADVENTURE: &'static str = "剧本";
     const HAHA: &'static str = "搞笑";
     const GAME: &'static str = "游戏";
     const FILM_TV: &'static str = "影视";
