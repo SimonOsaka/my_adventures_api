@@ -1,5 +1,5 @@
 use crate::app::AppState;
-use crate::handlers::adventures::responses::{AdventureResponse, Response_404};
+use crate::handlers::adventures::responses::{AdventureResponse, Response404};
 use domain::repositories::Repository;
 use std::convert::Infallible;
 use warp::http::StatusCode;
@@ -18,7 +18,7 @@ pub async fn get_adventure(
         debug!("response: {:?}", &response);
         Ok(warp::reply::json(&response).into_response())
     } else {
-        let json = warp::reply::json(&Response_404{message: "404".to_owned()});
+        let json = warp::reply::json(&Response404{message: "404".to_owned()});
         Ok(warp::reply::with_status(json, StatusCode::NOT_FOUND).into_response())
     }
 

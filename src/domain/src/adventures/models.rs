@@ -18,6 +18,7 @@ pub struct Adventures {
     pub link: String,
     pub source: u8,
     pub journey_destiny: String,
+    pub script_content: String,
 }
 
 #[derive(Clone, Debug, PartialEq)]

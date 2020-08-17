@@ -1,6 +1,6 @@
 use warp;
 
-pub type Response = std::result::Result<warp::reply::Json, ErrorResponse>;
+// pub type Response = std::result::Result<warp::reply::Json, ErrorResponse>;
 
 pub struct ErrorResponse(pub warp::reply::Response);
 

@@ -1,9 +1,5 @@
-pub mod articles;
-pub mod comments;
 pub mod index;
-pub mod profiles;
-pub mod users;
-//
+
 pub mod adventures;
 
 pub mod my_date_format {
@@ -48,7 +44,7 @@ pub mod my_date_format {
 
 pub mod my_item_type_format {
 
-    const ADVENTURE: &'static str = "剧本";
+    const SCRIPT: &'static str = "剧本";
     const HAHA: &'static str = "搞笑";
     const GAME: &'static str = "游戏";
     const FILM_TV: &'static str = "影视";
@@ -57,7 +53,7 @@ pub mod my_item_type_format {
 
     pub fn to_item_type_name(item_type: u8) -> String {
         match item_type {
-            1 => ADVENTURE.to_owned(),
+            1 => SCRIPT.to_owned(),
             2 => HAHA.to_owned(),
             3 => GAME.to_owned(),
             4 => FILM_TV.to_owned(),

@@ -26,6 +26,7 @@ impl From<Vec<domain::Adventures>> for AdventuresResponse {
                 source: a.source,
                 source_name: my_source::to_source_name(a.source),
                 journey_destiny_name: my_journey_destiny::to_name(&a.journey_destiny),
+                script_content: a.script_content,
             })
             .collect();
         Self {
@@ -55,6 +56,7 @@ impl From<domain::Adventures> for AdventureResponse {
             source: ad.source,
             source_name: my_source::to_source_name(ad.source),
             journey_destiny_name: my_journey_destiny::to_name(&ad.journey_destiny),
+            script_content: ad.script_content,
         };
         Self { adventure }
     }
@@ -75,6 +77,7 @@ pub struct Adventures {
     pub source: u8,
     pub source_name: String,
     pub journey_destiny_name: String,
+    pub script_content: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -99,6 +102,31 @@ pub struct UpdatedResponse {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct Response_404 {
+pub struct Response404 {
     pub message: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TabsResponse {
+    pub tab_list: Vec<Tabs>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct Tabs {
+    pub name: String,
+    pub item_id: u8,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct VersionUpdateResponse {
+    pub is_update: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub note: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub i_os: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub android: Option<String>,
 }

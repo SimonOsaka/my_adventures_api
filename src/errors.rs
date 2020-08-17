@@ -1,21 +1,21 @@
 //! A sub-module to prescribe how each domain error gets converted to an HTTP response.
 
-use jsonwebtoken::errors::Error as JwtError;
-use warp::http::{response::Response, status::StatusCode};
-use warp::reply::{with_status, Reply};
+// use jsonwebtoken::errors::Error as JwtError;
+// use warp::http::{response::Response, status::StatusCode};
+// use warp::reply::{with_status, Reply};
 
-use crate::response::ErrorResponse;
+// use crate::response::ErrorResponse;
 // use domain::{
 //     ChangeArticleError, DatabaseError, DeleteCommentError, GetArticleError, GetUserError,
 //     LoginError, PasswordError, PublishArticleError, SignUpError,
 // };
-use domain::DatabaseError;
+// use domain::DatabaseError;
 
-impl From<JwtError> for ErrorResponse {
-    fn from(_: JwtError) -> ErrorResponse {
-        ErrorResponse(StatusCode::UNAUTHORIZED.into_response())
-    }
-}
+// impl From<JwtError> for ErrorResponse {
+//     fn from(_: JwtError) -> ErrorResponse {
+//         ErrorResponse(StatusCode::UNAUTHORIZED.into_response())
+//     }
+// }
 
 // impl From<GetUserError> for ErrorResponse {
 //     fn from(e: GetUserError) -> ErrorResponse {
@@ -69,11 +69,11 @@ impl From<JwtError> for ErrorResponse {
 //     }
 // }
 
-impl From<DatabaseError> for ErrorResponse {
-    fn from(_: DatabaseError) -> ErrorResponse {
-        ErrorResponse(StatusCode::INTERNAL_SERVER_ERROR.into_response())
-    }
-}
+// impl From<DatabaseError> for ErrorResponse {
+//     fn from(_: DatabaseError) -> ErrorResponse {
+//         ErrorResponse(StatusCode::INTERNAL_SERVER_ERROR.into_response())
+//     }
+// }
 
 // impl From<PublishArticleError> for ErrorResponse {
 //     fn from(e: PublishArticleError) -> ErrorResponse {
