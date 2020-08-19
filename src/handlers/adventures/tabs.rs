@@ -10,7 +10,7 @@ pub async fn tabs_adventures(token: Option<String>) -> Result<impl warp::Reply, 
             item_id: 0,
         },
         Tabs {
-            name: "剧本".to_owned(),
+            name: "日常".to_owned(),
             item_id: 1,
         },
         Tabs {
