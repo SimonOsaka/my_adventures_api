@@ -2,7 +2,7 @@ use crate::models::{EntityId, MyAdventures, NewMyAdventures, UpdateMyAdventures}
 use crate::Repo;
 use anyhow::{Error, Result};
 use domain;
-use domain::AdventuresQuery;
+use domain::{AdventuresQuery, PlayListQuery};
 
 pub async fn insert(repo: &Repo, adventures_new: NewMyAdventures) -> Result<u64, Error> {
     let mut transaction = (&repo.connection_pool).begin().await?;
@@ -54,7 +54,7 @@ pub async fn find_latest(
 ) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
-        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content FROM my_adventures WHERE is_deleted = 0 ORDER BY id DESC LIMIT ?, ?",
+        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list FROM my_adventures WHERE is_deleted = 0 ORDER BY id DESC LIMIT ?, ?",
         query.offset,
         query.limit
     )
@@ -70,7 +70,7 @@ pub async fn find_by_item_type(
 ) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
-        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content FROM my_adventures WHERE is_deleted = 0 AND item_type = ? ORDER BY id DESC LIMIT ?, ?",
+        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list FROM my_adventures WHERE is_deleted = 0 AND item_type = ? ORDER BY id DESC LIMIT ?, ?",
         query.item_id,
         query.offset,
         query.limit
@@ -81,10 +81,25 @@ pub async fn find_by_item_type(
     Ok(my_adventures)
 }
 
+pub async fn find_by_play_list(
+    repo: &Repo,
+    query: PlayListQuery,
+) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
+    let my_adventures = sqlx::query_as!(
+        MyAdventures,
+        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list FROM my_adventures WHERE is_deleted = 0 AND play_list = ?",
+        query.play_list
+    )
+    .fetch_all(&repo.connection_pool)
+    .await?;
+
+    Ok(my_adventures)
+}
+
 pub async fn find_one(repo: &Repo, id: u64) -> anyhow::Result<Option<MyAdventures>, anyhow::Error> {
     let my = sqlx::query_as!(
         MyAdventures,
-        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content FROM my_adventures WHERE id = ? and is_deleted = 0",
+        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list FROM my_adventures WHERE id = ? and is_deleted = 0",
         id
     )
     .fetch_optional(&repo.connection_pool)

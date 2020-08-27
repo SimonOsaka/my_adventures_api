@@ -5,6 +5,7 @@ pub mod delete;
 pub mod get;
 pub mod tabs;
 pub mod version;
+pub mod play_list;
 
 pub mod responses;
 
@@ -15,3 +16,4 @@ pub use delete::delete_adventure;
 pub use get::get_adventure;
 pub use tabs::tabs_adventures;
 pub use version::version_update_adventures;
+pub use play_list::play_list_adventures;

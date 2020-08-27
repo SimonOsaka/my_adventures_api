@@ -145,6 +145,11 @@ pub fn routes(
             .and(warp::header::optional("Authorization"))
             .and(warp::query())
             .and_then(handlers::adventures::version_update_adventures))
+        .or(warp::path!("api" / "adventures" / "playlist" / String)
+            .and(warp::get())
+            .and(warp::header::optional("Authorization"))
+            .and(with_state(state.clone()))
+            .and_then(handlers::adventures::play_list_adventures))
 }
 
 fn with_state(

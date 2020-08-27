@@ -19,6 +19,7 @@ pub struct Adventures {
     pub source: u8,
     pub journey_destiny: String,
     pub script_content: String,
+    pub play_list: String,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -32,4 +33,9 @@ pub struct AdventuresUpdate {
 pub struct AdventureContent {
     pub title: String,
     pub image_url: String,
+}
+
+#[derive(Clone, Debug)]
+pub struct PlayListQuery {
+    pub play_list: String,
 }

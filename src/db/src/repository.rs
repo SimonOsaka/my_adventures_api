@@ -40,6 +40,32 @@ impl domain::repositories::Repository for Repository {
                 source: m.source,
                 journey_destiny: m.journey_destiny,
                 script_content: m.script_content,
+                play_list: m.play_list,
+            })
+            .collect();
+        Ok(result)
+    }
+
+    async fn find_adventures_by_play_list(
+        &self,
+        query: domain::PlayListQuery,
+    ) -> Result<Vec<domain::Adventures>, DatabaseError> {
+        let my_list_result = adventures::find_by_play_list(&self.0, query).await;
+        let result: Vec<domain::Adventures> = my_list_result
+            .map_err(to_db_error)
+            .unwrap()
+            .into_iter()
+            .map(|m| domain::Adventures {
+                id: m.id,
+                title: m.title,
+                image_url: m.image_url,
+                created_at: DateTimeUtils::beijing(m.created_at),
+                item_type: m.item_type,
+                link: m.link,
+                source: m.source,
+                journey_destiny: m.journey_destiny,
+                script_content: m.script_content,
+                play_list: m.play_list,
             })
             .collect();
         Ok(result)
@@ -91,6 +117,7 @@ impl domain::repositories::Repository for Repository {
                 source: ad.source,
                 journey_destiny: ad.journey_destiny,
                 script_content: ad.script_content,
+                play_list: ad.play_list,
             }),
             _ => None,
         };

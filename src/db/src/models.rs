@@ -18,6 +18,7 @@ pub struct MyAdventures {
     pub source: u8,
     pub journey_destiny: String,
     pub script_content: String,
+    pub play_list: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]

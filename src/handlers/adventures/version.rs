@@ -26,10 +26,10 @@ pub async fn version_update_adventures(
         let mut is_update: bool = false;
         let mut note: Option<String> = None;
         let mut android: Option<String> = None;
-        if query.version != "1.0.4" {
+        if query.version != "1.1.0" {
             is_update = true;
             note = Some("有新版本需要更新".to_string());
-            android = Some("http://dl.jicu.vip/adventures_20200819.apk".to_string());
+            android = Some("http://dl.jicu.vip/adventures_20200827.apk".to_string());
         }
 
         let response = VersionUpdateResponse {
