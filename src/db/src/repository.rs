@@ -41,6 +41,7 @@ impl domain::repositories::Repository for Repository {
                 journey_destiny: m.journey_destiny,
                 script_content: m.script_content,
                 play_list: m.play_list,
+                address: m.address,
             })
             .collect();
         Ok(result)
@@ -66,6 +67,7 @@ impl domain::repositories::Repository for Repository {
                 journey_destiny: m.journey_destiny,
                 script_content: m.script_content,
                 play_list: m.play_list,
+                address: m.address,
             })
             .collect();
         Ok(result)
@@ -118,6 +120,7 @@ impl domain::repositories::Repository for Repository {
                 journey_destiny: ad.journey_destiny,
                 script_content: ad.script_content,
                 play_list: ad.play_list,
+                address: ad.address,
             }),
             _ => None,
         };

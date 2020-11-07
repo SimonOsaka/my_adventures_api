@@ -20,6 +20,7 @@ pub struct Adventures {
     pub journey_destiny: String,
     pub script_content: String,
     pub play_list: String,
+    pub address: String,
 }
 
 #[derive(Clone, Debug, PartialEq)]

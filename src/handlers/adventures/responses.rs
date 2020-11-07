@@ -28,6 +28,7 @@ impl From<Vec<domain::Adventures>> for AdventuresResponse {
                 journey_destiny_name: my_journey_destiny::to_name(&a.journey_destiny),
                 script_content: a.script_content,
                 play_list: a.play_list,
+                address: a.address,
             })
             .collect();
         Self {
@@ -59,6 +60,7 @@ impl From<domain::Adventures> for AdventureResponse {
             journey_destiny_name: my_journey_destiny::to_name(&ad.journey_destiny),
             script_content: ad.script_content,
             play_list: ad.play_list,
+            address: ad.address,
         };
         Self { adventure }
     }
@@ -81,6 +83,7 @@ pub struct Adventures {
     pub journey_destiny_name: String,
     pub script_content: String,
     pub play_list: String,
+    pub address: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

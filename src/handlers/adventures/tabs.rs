@@ -24,10 +24,15 @@ pub async fn tabs_adventures(token: Option<String>) -> Result<impl warp::Reply, 
         Tabs {
             name: "影视".to_owned(),
             item_id: 4,
-        },Tabs {
+        },
+        Tabs {
             name: "旅游".to_owned(),
             item_id: 5,
-        }
+        },
+        Tabs {
+            name: "美食".to_owned(),
+            item_id: 6,
+        },
     ];
     let response = TabsResponse { tab_list: tabs };
     debug!("response: {:?}", &response);

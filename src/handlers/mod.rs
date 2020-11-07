@@ -49,6 +49,7 @@ pub mod my_item_type_format {
     const GAME: &'static str = "游戏";
     const FILM_TV: &'static str = "影视";
     const JOURNEY: &'static str = "旅游";
+    const FOOD: &'static str = "美食";
     const NONE: &'static str = "";
 
     pub fn to_item_type_name(item_type: u8) -> String {
@@ -58,6 +59,7 @@ pub mod my_item_type_format {
             3 => GAME.to_owned(),
             4 => FILM_TV.to_owned(),
             5 => JOURNEY.to_owned(),
+            6 => FOOD.to_owned(),
             _ => NONE.to_owned(),
         }
     }
