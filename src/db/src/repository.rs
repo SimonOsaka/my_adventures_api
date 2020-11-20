@@ -1,5 +1,4 @@
 use crate::queries::adventures;
-use crate::DateTimeUtils;
 use crate::Repo;
 use anyhow::Error as OpaqueError;
 use anyhow::Result;
@@ -34,7 +33,7 @@ impl domain::repositories::Repository for Repository {
                 id: m.id,
                 title: m.title,
                 image_url: m.image_url,
-                created_at: DateTimeUtils::beijing(m.created_at),
+                created_at: m.created_at,
                 item_type: m.item_type,
                 link: m.link,
                 source: m.source,
@@ -60,7 +59,7 @@ impl domain::repositories::Repository for Repository {
                 id: m.id,
                 title: m.title,
                 image_url: m.image_url,
-                created_at: DateTimeUtils::beijing(m.created_at),
+                created_at: m.created_at,
                 item_type: m.item_type,
                 link: m.link,
                 source: m.source,
@@ -113,7 +112,7 @@ impl domain::repositories::Repository for Repository {
                 id: ad.id,
                 title: ad.title,
                 image_url: ad.image_url,
-                created_at: DateTimeUtils::beijing(ad.created_at),
+                created_at: ad.created_at,
                 item_type: ad.item_type,
                 link: ad.link,
                 source: ad.source,

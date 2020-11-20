@@ -1,5 +1,5 @@
 use crate::handlers::{my_date_format, my_item_type_format, my_journey_destiny, my_source};
-use chrono::{DateTime, FixedOffset};
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -73,7 +73,7 @@ pub struct Adventures {
     pub title: String,
     pub image_url: String,
     #[serde(with = "my_date_format")]
-    pub created_at: DateTime<FixedOffset>,
+    pub created_at: DateTime<Utc>,
     pub author_name: String,
     pub item_type: u8,
     pub item_type_name: String,

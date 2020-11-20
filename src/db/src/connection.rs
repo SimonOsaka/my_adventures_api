@@ -1,4 +1,5 @@
-use sqlx::MySqlPool;
+use sqlx::mysql::MySqlPoolOptions;
+use sqlx::{Executor, MySqlPool};
 /// A database "repository", for running database workloads.
 #[derive(Clone, Debug)]
 pub struct Repo {
@@ -14,10 +15,18 @@ impl Repo {
     // Creates a repo with a pool builder, allowing you to customize
     // any connection pool configuration.
     pub async fn from_pool_builder(database_url: &str) -> Self {
-        let connection_pool = MySqlPool::builder()
-            .max_size(5)
-            .min_size(1)
-            .build(&database_url)
+        let connection_pool = MySqlPoolOptions::new()
+            .max_connections(5)
+            .min_connections(1)
+            .connect_timeout(std::time::Duration::from_secs(30))
+            .after_connect(|conn| {
+                Box::pin(async move {
+                    conn.execute("SET time_zone = '+08:00';").await?;
+
+                    Ok(())
+                })
+            })
+            .connect(&database_url)
             .await
             .expect("init database error");
         Repo { connection_pool }

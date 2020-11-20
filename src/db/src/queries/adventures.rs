@@ -3,6 +3,8 @@ use crate::Repo;
 use anyhow::{Error, Result};
 use domain;
 use domain::{AdventuresQuery, PlayListQuery};
+use sqlx::mysql::MySqlDone;
+use sqlx::Done;
 
 pub async fn insert(repo: &Repo, adventures_new: NewMyAdventures) -> Result<u64, Error> {
     let mut transaction = (&repo.connection_pool).begin().await?;
@@ -25,7 +27,7 @@ pub async fn insert(repo: &Repo, adventures_new: NewMyAdventures) -> Result<u64,
 }
 
 pub async fn update(repo: &Repo, adventures_update: UpdateMyAdventures) -> Result<bool, Error> {
-    let rows_affected = sqlx::query!(
+    let d: MySqlDone = sqlx::query!(
         "UPDATE my_adventures SET title = ?, image_url = ? WHERE id = ?",
         adventures_update.title,
         adventures_update.image_url,
@@ -34,18 +36,18 @@ pub async fn update(repo: &Repo, adventures_update: UpdateMyAdventures) -> Resul
     .execute(&repo.connection_pool)
     .await?;
 
-    Ok(rows_affected > 0)
+    Ok(d.rows_affected() > 0)
 }
 
 pub async fn delete(repo: &Repo, _id: u64) -> Result<bool, Error> {
-    let rows_affected = sqlx::query!(
+    let d: MySqlDone = sqlx::query!(
         "UPDATE my_adventures SET is_deleted=1 WHERE is_deleted = 0 and id = ?",
         _id
     )
     .execute(&repo.connection_pool)
     .await?;
 
-    Ok(rows_affected > 0)
+    Ok(d.rows_affected() > 0)
 }
 
 pub async fn find_latest(
