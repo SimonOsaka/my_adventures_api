@@ -16,7 +16,7 @@ mod routes;
 async fn main() {
     dotenv::dotenv().ok();
 
-    pretty_env_logger::init();
+    pretty_env_logger::init_timed();
 
     app::start().await;
 }
