@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate async_trait;
 
-extern crate pretty_env_logger;
 #[macro_use] extern crate log;
 
 pub mod connection;

@@ -16,7 +16,6 @@ chrono = { version = "0.4.13", features = ["serde"] }
 domain = { package = "realworld-domain", path = "../domain" }
 anyhow = "1.0.32"
 async-trait = "0.1"
-pretty_env_logger = "0.4.0"
 log = "0.4"
 
 [dev-dependencies]
