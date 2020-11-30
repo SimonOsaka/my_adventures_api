@@ -17,9 +17,9 @@ thiserror = "1.0.20"
 bcrypt = "0.8.1"
 anyhow = "1.0.32"
 async-trait = "0.1"
+flexi_logger = "0.16"
 log = "0.4"
 
 [dev-dependencies]
-application = { package = "realworld-application", path = "../application"}
 db = { package = "realworld-db", path = "../db" }
 fake = "1.2.2"

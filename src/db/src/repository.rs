@@ -1,4 +1,5 @@
 use crate::queries::adventures;
+use crate::types::{SqlID, convert_id, convert_ts, convert_id_u64, convert_i16_u8};
 use crate::Repo;
 use anyhow::Error as OpaqueError;
 use anyhow::Result;
@@ -30,13 +31,13 @@ impl domain::repositories::Repository for Repository {
             .unwrap()
             .into_iter()
             .map(|m| domain::Adventures {
-                id: m.id,
+                id: convert_id(m.id),
                 title: m.title,
                 image_url: m.image_url,
-                created_at: m.created_at,
-                item_type: m.item_type,
+                created_at: convert_ts(m.created_at),
+                item_type: convert_i16_u8(m.item_type),
                 link: m.link,
-                source: m.source,
+                source: convert_i16_u8(m.source),
                 journey_destiny: m.journey_destiny,
                 script_content: m.script_content,
                 play_list: m.play_list,
@@ -56,13 +57,13 @@ impl domain::repositories::Repository for Repository {
             .unwrap()
             .into_iter()
             .map(|m| domain::Adventures {
-                id: m.id,
+                id: convert_id(m.id),
                 title: m.title,
                 image_url: m.image_url,
-                created_at: m.created_at,
-                item_type: m.item_type,
+                created_at: convert_ts(m.created_at),
+                item_type: convert_i16_u8(m.item_type),
                 link: m.link,
-                source: m.source,
+                source: convert_i16_u8(m.source),
                 journey_destiny: m.journey_destiny,
                 script_content: m.script_content,
                 play_list: m.play_list,
@@ -85,7 +86,7 @@ impl domain::repositories::Repository for Repository {
     }
 
     async fn delete_adventure(&self, _id: u64) -> Result<bool, DatabaseError> {
-        let deleted = adventures::delete(&self.0, _id).await?;
+        let deleted = adventures::delete(&self.0, convert_id_u64(_id)).await?;
 
         Ok(deleted)
     }
@@ -93,9 +94,9 @@ impl domain::repositories::Repository for Repository {
         &self,
         draft: domain::AdventureContent,
     ) -> Result<u64, DatabaseError> {
-        let id: u64 = adventures::insert(&self.0, draft.into()).await.unwrap();
+        let id: SqlID = adventures::insert(&self.0, draft.into()).await.unwrap();
 
-        Ok(id)
+        Ok(convert_id(id))
     }
 
     async fn get_adventure_by_id(
@@ -109,13 +110,13 @@ impl domain::repositories::Repository for Repository {
 
         let result = match my {
             Some(ad) => Some(domain::Adventures {
-                id: ad.id,
+                id: convert_id(ad.id),
                 title: ad.title,
                 image_url: ad.image_url,
-                created_at: ad.created_at,
-                item_type: ad.item_type,
+                created_at: convert_ts(ad.created_at),
+                item_type: convert_i16_u8(ad.item_type),
                 link: ad.link,
-                source: ad.source,
+                source: convert_i16_u8(ad.source),
                 journey_destiny: ad.journey_destiny,
                 script_content: ad.script_content,
                 play_list: ad.play_list,

@@ -4,21 +4,26 @@ version = "0.1.0"
 authors = ["colinbankier <colinbankier@gmail.com>", "LukeMathWalker <rust@lpalmieri.com>"]
 edition = "2018"
 
+[features]
+default = [ "mysql" ]
+postgres = [ "sqlx/postgres"]
+mysql = [ "sqlx/mysql"]
+
 [lib]
 name = "realworld_db"
 path = "src/lib.rs"
 
 [dependencies]
-sqlx = { version = "0.4.1", default-features = false, features = [ "runtime-tokio-rustls", "macros", "chrono", "mysql" ] }
+sqlx = { version = "0.4.1", default-features = false, features = [ "runtime-tokio-rustls", "macros", "chrono" ] }
 serde = { version= "1.0.114", features = ["derive"] }
 chrono = { version = "0.4.13", features = ["serde"] }
 # uuid = { version = "0.7.4", features = ["serde", "v4"] }
 domain = { package = "realworld-domain", path = "../domain" }
 anyhow = "1.0.32"
 async-trait = "0.1"
+flexi_logger = "0.16"
 log = "0.4"
 
 [dev-dependencies]
-application = { package = "realworld-application", path = "../application"}
 fake = "1.2.2"
 log = "*"

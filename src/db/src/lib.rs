@@ -1,12 +1,13 @@
 #[macro_use]
 extern crate async_trait;
-
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
 pub mod connection;
 pub mod models;
 pub mod queries;
 pub mod repository;
+pub mod types;
 
 pub use repository::Repository;
 

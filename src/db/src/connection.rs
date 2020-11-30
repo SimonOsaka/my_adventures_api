@@ -1,9 +1,11 @@
-use sqlx::mysql::MySqlPoolOptions;
-use sqlx::{Executor, MySqlPool};
+use crate::types::{PoolOptions, SqlPool};
+use sqlx::Executor;
+
 /// A database "repository", for running database workloads.
+
 #[derive(Clone, Debug)]
 pub struct Repo {
-    pub connection_pool: MySqlPool,
+    pub connection_pool: SqlPool,
 }
 
 impl Repo {
@@ -15,13 +17,17 @@ impl Repo {
     // Creates a repo with a pool builder, allowing you to customize
     // any connection pool configuration.
     pub async fn from_pool_builder(database_url: &str) -> Self {
-        let connection_pool = MySqlPoolOptions::new()
+        let connection_pool = PoolOptions::new()
             .max_connections(5)
             .min_connections(1)
             .connect_timeout(std::time::Duration::from_secs(30))
             .after_connect(|conn| {
                 Box::pin(async move {
-                    conn.execute("SET time_zone = '+08:00';").await?;
+                    if cfg!(feature = "mysql") {
+                        conn.execute("SET time_zone = '+08:00';").await?;
+                    } else if cfg!(feature = "postgres") {
+                        conn.execute("SET TIME ZONE '+08:00';").await?;
+                    }
 
                     Ok(())
                 })

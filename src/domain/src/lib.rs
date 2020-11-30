@@ -1,8 +1,6 @@
 #[macro_use]
 extern crate async_trait;
 
-extern crate log;
-
 pub mod errors;
 pub mod repositories;
 
