@@ -1,14 +1,16 @@
 use crate::queries::adventures;
-use crate::types::{SqlID, convert_id, convert_ts, convert_id_u64, convert_i16_u8};
+use crate::types::{convert_i16_u8, convert_id, convert_id_u64, convert_ts, SqlID};
 use crate::Repo;
 use anyhow::Error as OpaqueError;
 use anyhow::Result;
 use domain::DatabaseError;
+use sqlx::Error;
 
 // /// Helper function to cast a diesel::Error into a domain Database Error.
 // /// This requires casting the diesel::Error into anyhow::Error first.
-pub fn to_db_error(e: OpaqueError) -> domain::DatabaseError {
-    domain::DatabaseError::from(e)
+pub fn to_db_error(e: Error) -> DatabaseError {
+    let oe = OpaqueError::from(e);
+    DatabaseError::from(oe)
 }
 
 #[derive(Clone, Debug)]
@@ -86,7 +88,10 @@ impl domain::repositories::Repository for Repository {
     }
 
     async fn delete_adventure(&self, _id: u64) -> Result<bool, DatabaseError> {
-        let deleted = adventures::delete(&self.0, convert_id_u64(_id)).await?;
+        let deleted = adventures::delete(&self.0, convert_id_u64(_id))
+            .await
+            .map_err(to_db_error)
+            .unwrap();
 
         Ok(deleted)
     }

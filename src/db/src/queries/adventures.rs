@@ -1,6 +1,7 @@
 use crate::models::{ MyAdventures, NewMyAdventures, UpdateMyAdventures};
 use crate::Repo;
-use anyhow::{Error, Result};
+use anyhow::Result;
+use sqlx::Error;
 use domain;
 use domain::{AdventuresQuery, PlayListQuery};
 use sqlx::Done;
@@ -107,7 +108,7 @@ pub async fn delete(repo: &Repo, _id: i64) -> Result<bool, Error> {
 pub async fn find_latest(
     repo: &Repo,
     query: AdventuresQuery,
-) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
+) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE is_deleted = 0 ORDER BY id DESC LIMIT ?, ?",
@@ -124,7 +125,7 @@ pub async fn find_latest(
 pub async fn find_latest(
     repo: &Repo,
     query: AdventuresQuery,
-) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
+) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         r#"
@@ -151,7 +152,7 @@ pub async fn find_latest(
 pub async fn find_by_item_type(
     repo: &Repo,
     query: AdventuresQuery,
-) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
+) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE is_deleted = 0 AND item_type = ? ORDER BY id DESC LIMIT ?, ?",
@@ -169,7 +170,7 @@ pub async fn find_by_item_type(
 pub async fn find_by_item_type(
     repo: &Repo,
     query: AdventuresQuery,
-) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
+) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         r#"
@@ -197,7 +198,7 @@ pub async fn find_by_item_type(
 pub async fn find_by_play_list(
     repo: &Repo,
     query: PlayListQuery,
-) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
+) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE is_deleted = 0 AND play_list = ?",
@@ -213,7 +214,7 @@ pub async fn find_by_play_list(
 pub async fn find_by_play_list(
     repo: &Repo,
     query: PlayListQuery,
-) -> anyhow::Result<Vec<MyAdventures>, anyhow::Error> {
+) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         r#"
@@ -234,7 +235,7 @@ pub async fn find_by_play_list(
 }
 
 #[cfg(any(feature = "mysql"))]
-pub async fn find_one(repo: &Repo, id: u64) -> anyhow::Result<Option<MyAdventures>, anyhow::Error> {
+pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, Error> {
     let my = sqlx::query_as!(
         MyAdventures,
         "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE id = ? and is_deleted = 0",
@@ -247,7 +248,7 @@ pub async fn find_one(repo: &Repo, id: u64) -> anyhow::Result<Option<MyAdventure
 }
 
 #[cfg(any(feature = "postgres"))]
-pub async fn find_one(repo: &Repo, id: u64) -> anyhow::Result<Option<MyAdventures>, anyhow::Error> {
+pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, Error> {
     let my = sqlx::query_as!(
         MyAdventures,
         r#"
