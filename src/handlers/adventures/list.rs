@@ -13,6 +13,7 @@ pub struct AdventuresQueryReq {
     pub item_id: u8,
     pub limit: Option<u32>,
     pub offset: Option<u32>,
+    pub province_key: Option<String>,
 }
 
 impl From<AdventuresQueryReq> for domain::AdventuresQuery {
@@ -21,6 +22,7 @@ impl From<AdventuresQueryReq> for domain::AdventuresQuery {
             item_id: ad.item_id,
             limit: ad.limit,
             offset: ad.offset,
+            province_key: ad.province_key,
         }
     }
 }

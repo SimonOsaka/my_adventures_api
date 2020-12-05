@@ -155,8 +155,43 @@ pub async fn find_by_item_type(
 ) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
-        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE is_deleted = 0 AND item_type = ? ORDER BY id DESC LIMIT ?, ?",
+        r#"
+        SELECT
+            id,title,created_at,is_deleted,image_url,item_type,link,source,
+            journey_destiny,script_content,play_list,address
+        FROM
+            my_adventures
+        WHERE
+            is_deleted = 0 AND item_type = ? ORDER BY id DESC LIMIT ?, ?
+        "#,
         query.item_id,
+        query.offset,
+        query.limit
+    )
+        .fetch_all(&repo.connection_pool)
+        .await?;
+
+    Ok(my_adventures)
+}
+
+#[cfg(any(feature = "mysql"))]
+pub async fn find_by_item_type_province(
+    repo: &Repo,
+    query: AdventuresQuery,
+) -> Result<Vec<MyAdventures>, Error> {
+    let my_adventures = sqlx::query_as!(
+        MyAdventures,
+        r#"
+        SELECT
+            id,title,created_at,is_deleted,image_url,item_type,link,source,
+            journey_destiny,script_content,play_list,address
+        FROM
+            my_adventures
+        WHERE
+            is_deleted = 0 AND item_type = ? and journey_destiny = ? ORDER BY id DESC LIMIT ?, ?
+        "#,
+        query.item_id,
+        query.province_key,
         query.offset,
         query.limit
     )

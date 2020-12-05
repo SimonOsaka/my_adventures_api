@@ -6,6 +6,7 @@ pub struct AdventuresQuery {
     pub item_id: u8,
     pub limit: Option<u32>,
     pub offset: Option<u32>,
+    pub province_key: Option<String>,
 }
 
 #[derive(Clone, Debug, Serialize, PartialEq)]

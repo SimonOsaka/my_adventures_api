@@ -24,7 +24,21 @@ impl domain::repositories::Repository for Repository {
     ) -> Result<Vec<domain::Adventures>, DatabaseError> {
         let my_list_result;
         if query.item_id != 0 {
-            my_list_result = adventures::find_by_item_type(&self.0, query).await;
+            match query.province_key.as_ref() {
+                // 字符串变量存在
+                Some(pv) => {
+                    if pv.len() > 0 {
+                        //非空字符串
+                        my_list_result =
+                            adventures::find_by_item_type_province(&self.0, query).await;
+                    } else {
+                        //空字符串
+                        my_list_result = adventures::find_by_item_type(&self.0, query).await;
+                    }
+                }
+                // 字符串变量不存在
+                _ => my_list_result = adventures::find_by_item_type(&self.0, query).await,
+            }
         } else {
             my_list_result = adventures::find_latest(&self.0, query).await;
         }
