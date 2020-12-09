@@ -58,6 +58,10 @@ impl domain::repositories::Repository for Repository {
                 script_content: m.script_content,
                 play_list: m.play_list,
                 address: m.address,
+                shop_name: m.shop_name,
+                province: m.province,
+                city: m.city,
+                district: m.district,
             })
             .collect();
         Ok(result)
@@ -84,6 +88,10 @@ impl domain::repositories::Repository for Repository {
                 script_content: m.script_content,
                 play_list: m.play_list,
                 address: m.address,
+                shop_name: m.shop_name,
+                province: m.province,
+                city: m.city,
+                district: m.district,
             })
             .collect();
         Ok(result)
@@ -140,6 +148,10 @@ impl domain::repositories::Repository for Repository {
                 script_content: ad.script_content,
                 play_list: ad.play_list,
                 address: ad.address,
+                shop_name: ad.shop_name,
+                province: ad.province,
+                city: ad.city,
+                district: ad.district,
             }),
             _ => None,
         };

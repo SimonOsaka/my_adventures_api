@@ -41,22 +41,28 @@ pub mod my_date_format {
 
 pub mod my_item_type_format {
 
+    const ALL: &'static str = "全部";
+
     const DAILY: &'static str = "日常";
     const HAHA: &'static str = "搞笑";
     const GAME: &'static str = "游戏";
     const FILM_TV: &'static str = "影视";
     const JOURNEY: &'static str = "旅游";
-    const FOOD: &'static str = "美食";
+    const RESTAURANT: &'static str = "饭馆";
+    const RETAIL: &'static str = "好物";
+
     const NONE: &'static str = "";
 
     pub fn to_item_type_name(item_type: u8) -> String {
         match item_type {
+            0 => ALL.to_owned(),
             1 => DAILY.to_owned(),
             2 => HAHA.to_owned(),
             3 => GAME.to_owned(),
             4 => FILM_TV.to_owned(),
             5 => JOURNEY.to_owned(),
-            6 => FOOD.to_owned(),
+            6 => RESTAURANT.to_owned(),
+            7 => RETAIL.to_owned(),
             _ => NONE.to_owned(),
         }
     }

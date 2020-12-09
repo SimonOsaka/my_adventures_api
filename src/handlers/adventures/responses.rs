@@ -29,6 +29,10 @@ impl From<Vec<domain::Adventures>> for AdventuresResponse {
                 script_content: a.script_content,
                 play_list: a.play_list,
                 address: a.address,
+                shop_name: a.shop_name,
+                province: a.province,
+                city: a.city,
+                district: a.district,
             })
             .collect();
         Self {
@@ -61,6 +65,10 @@ impl From<domain::Adventures> for AdventureResponse {
             script_content: ad.script_content,
             play_list: ad.play_list,
             address: ad.address,
+            shop_name: ad.shop_name,
+            province: ad.province,
+            city: ad.city,
+            district: ad.district,
         };
         Self { adventure }
     }
@@ -84,6 +92,10 @@ pub struct Adventures {
     pub script_content: String,
     pub play_list: String,
     pub address: String,
+    pub shop_name: String,
+    pub province: String,
+    pub city: String,
+    pub district: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

@@ -131,7 +131,8 @@ pub async fn find_latest(
         r#"
         SELECT
             id,title,created_at,is_deleted,image_url,item_type,link,
-            source,journey_destiny,script_content,play_list,address
+            source,journey_destiny,script_content,play_list,address,
+            shop_name,province,city,district
         FROM
             my_adventures
         WHERE
@@ -174,33 +175,6 @@ pub async fn find_by_item_type(
     Ok(my_adventures)
 }
 
-#[cfg(any(feature = "mysql"))]
-pub async fn find_by_item_type_province(
-    repo: &Repo,
-    query: AdventuresQuery,
-) -> Result<Vec<MyAdventures>, Error> {
-    let my_adventures = sqlx::query_as!(
-        MyAdventures,
-        r#"
-        SELECT
-            id,title,created_at,is_deleted,image_url,item_type,link,source,
-            journey_destiny,script_content,play_list,address
-        FROM
-            my_adventures
-        WHERE
-            is_deleted = 0 AND item_type = ? and journey_destiny = ? ORDER BY id DESC LIMIT ?, ?
-        "#,
-        query.item_id,
-        query.province_key,
-        query.offset,
-        query.limit
-    )
-        .fetch_all(&repo.connection_pool)
-        .await?;
-
-    Ok(my_adventures)
-}
-
 #[cfg(any(feature = "postgres"))]
 pub async fn find_by_item_type(
     repo: &Repo,
@@ -211,7 +185,8 @@ pub async fn find_by_item_type(
         r#"
         SELECT
             id,title,created_at,is_deleted,image_url,item_type,link,
-            source,journey_destiny,script_content,play_list,address
+            source,journey_destiny,script_content,play_list,address,
+            shop_name,province,city,district
         FROM
             my_adventures
         WHERE
@@ -254,8 +229,9 @@ pub async fn find_by_play_list(
         MyAdventures,
         r#"
         SELECT
-            id,title,created_at,is_deleted,image_url,item_type,link,source,
-            journey_destiny,script_content,play_list,address
+            id,title,created_at,is_deleted,image_url,item_type,link,
+            source,journey_destiny,script_content,play_list,address,
+            shop_name,province,city,district
         FROM
             my_adventures
         WHERE
@@ -289,7 +265,8 @@ pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, Erro
         r#"
         SELECT
             id,title,created_at,is_deleted,image_url,item_type,link,
-            source,journey_destiny,script_content,play_list,address
+            source,journey_destiny,script_content,play_list,address,
+            shop_name,province,city,district
         FROM
             my_adventures
         WHERE id = $1 and is_deleted = 0
@@ -300,4 +277,59 @@ pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, Erro
         .await?;
 
     Ok(my)
+}
+
+#[cfg(any(feature = "mysql"))]
+pub async fn find_by_item_type_province(
+    repo: &Repo,
+    query: AdventuresQuery,
+) -> Result<Vec<MyAdventures>, Error> {
+    let my_adventures = sqlx::query_as!(
+        MyAdventures,
+        r#"
+        SELECT
+            id,title,created_at,is_deleted,image_url,item_type,link,source,
+            journey_destiny,script_content,play_list,address
+        FROM
+            my_adventures
+        WHERE
+            is_deleted = 0 AND item_type = ? and journey_destiny = ? ORDER BY id DESC LIMIT ?, ?
+        "#,
+        query.item_id,
+        query.province_key,
+        query.offset,
+        query.limit
+    )
+        .fetch_all(&repo.connection_pool)
+        .await?;
+
+    Ok(my_adventures)
+}
+
+#[cfg(any(feature = "postgres"))]
+pub async fn find_by_item_type_province(
+    repo: &Repo,
+    query: AdventuresQuery,
+) -> Result<Vec<MyAdventures>, Error> {
+    let my_adventures = sqlx::query_as!(
+        MyAdventures,
+        r#"
+        SELECT
+            id,title,created_at,is_deleted,image_url,item_type,link,
+            source,journey_destiny,script_content,play_list,address,
+            shop_name,province,city,district
+        FROM
+            my_adventures
+        WHERE
+            is_deleted = 0 AND item_type = $1 and journey_destiny = $2 ORDER BY id DESC LIMIT $3 OFFSET $4
+        "#,
+        query.item_id as i16,
+        query.province_key,
+        query.limit.unwrap() as i64,
+        query.offset.unwrap() as i64
+    )
+        .fetch_all(&repo.connection_pool)
+        .await?;
+
+    Ok(my_adventures)
 }

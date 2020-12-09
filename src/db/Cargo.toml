@@ -5,7 +5,7 @@ authors = ["colinbankier <colinbankier@gmail.com>", "LukeMathWalker <rust@lpalmi
 edition = "2018"
 
 [features]
-default = [ "mysql" ]
+default = [ "postgres" ]
 postgres = [ "sqlx/postgres"]
 mysql = [ "sqlx/mysql"]
 

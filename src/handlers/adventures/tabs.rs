@@ -1,4 +1,5 @@
 use crate::handlers::adventures::responses::{Tabs, TabsResponse};
+use crate::handlers::my_item_type_format::to_item_type_name;
 use std::convert::Infallible;
 
 pub async fn tabs_adventures(token: Option<String>) -> Result<impl warp::Reply, Infallible> {
@@ -6,7 +7,7 @@ pub async fn tabs_adventures(token: Option<String>) -> Result<impl warp::Reply, 
 
     let tabs: Vec<Tabs> = vec![
         Tabs {
-            name: "全部".to_owned(),
+            name: to_item_type_name(0),
             item_id: 0,
         },
         // Tabs {
@@ -14,7 +15,7 @@ pub async fn tabs_adventures(token: Option<String>) -> Result<impl warp::Reply, 
         //     item_id: 1,
         // },
         Tabs {
-            name: "搞笑".to_owned(),
+            name: to_item_type_name(2),
             item_id: 2,
         },
         // Tabs {
@@ -22,16 +23,20 @@ pub async fn tabs_adventures(token: Option<String>) -> Result<impl warp::Reply, 
         //     item_id: 3,
         // },
         Tabs {
-            name: "影视".to_owned(),
+            name: to_item_type_name(4),
             item_id: 4,
         },
         Tabs {
-            name: "旅游".to_owned(),
+            name: to_item_type_name(5),
             item_id: 5,
         },
         Tabs {
-            name: "美食".to_owned(),
+            name: to_item_type_name(6),
             item_id: 6,
+        },
+        Tabs {
+            name: to_item_type_name(7),
+            item_id: 7,
         },
     ];
     let response = TabsResponse { tab_list: tabs };

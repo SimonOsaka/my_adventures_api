@@ -22,6 +22,10 @@ pub struct Adventures {
     pub script_content: String,
     pub play_list: String,
     pub address: String,
+    pub shop_name: String,
+    pub province: String,
+    pub city: String,
+    pub district: String,
 }
 
 #[derive(Clone, Debug, PartialEq)]
