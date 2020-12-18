@@ -6,7 +6,7 @@ pub mod my_date_format {
     use chrono::{DateTime, Utc, TimeZone};
     use serde::{self, Deserialize, Deserializer, Serializer};
 
-    const FORMAT: &'static str = "%Y-%m-%d %H:%M:%S";
+    const FORMAT: &str = "%Y-%m-%d %H:%M:%S";
 
     // The signature of a serialize_with function must follow the pattern:
     //
@@ -41,17 +41,17 @@ pub mod my_date_format {
 
 pub mod my_item_type_format {
 
-    const ALL: &'static str = "全部";
+    const ALL: &str = "全部";
 
-    const DAILY: &'static str = "日常";
-    const HAHA: &'static str = "搞笑";
-    const GAME: &'static str = "游戏";
-    const FILM_TV: &'static str = "影视";
-    const JOURNEY: &'static str = "旅游";
-    const RESTAURANT: &'static str = "饭馆";
-    const RETAIL: &'static str = "好物";
+    const DAILY: &str = "日常";
+    const HAHA: &str = "搞笑";
+    const GAME: &str = "游戏";
+    const FILM_TV: &str = "影视";
+    const JOURNEY: &str = "旅游";
+    const RESTAURANT: &str = "饭馆";
+    const RETAIL: &str = "好物";
 
-    const NONE: &'static str = "";
+    const NONE: &str = "";
 
     pub fn to_item_type_name(item_type: u8) -> String {
         match item_type {
@@ -69,10 +69,10 @@ pub mod my_item_type_format {
 }
 
 pub mod my_source {
-    const DOUYIN: &'static str = "抖音";
-    const BILIBILI: &'static str = "哔哩哔哩";
-    const XIGUASHIPIN: &'static str = "西瓜视频";
-    const NONE: &'static str = "";
+    const DOUYIN: &str = "抖音";
+    const BILIBILI: &str = "哔哩哔哩";
+    const XIGUASHIPIN: &str = "西瓜视频";
+    const NONE: &str = "";
 
     pub fn to_source_name(source: u8) -> String {
         match source {
@@ -86,44 +86,44 @@ pub mod my_source {
 
 pub mod my_journey_destiny {
     // 省
-    const HENAN: &'static str = "河南";
-    const HEBEI: &'static str = "河北";
-    const SHANXI_JIN: &'static str = "山西";
-    const SHANDONG: &'static str = "山东";
-    const GUANGXI: &'static str = "广西";
-    const GUANGDONG: &'static str = "广东";
-    const FUJIAN: &'static str = "福建";
-    const ANHUI: &'static str = "安徽";
-    const GUIZHOU: &'static str = "贵州";
-    const HAINAN: &'static str = "海南";
-    const HUNAN: &'static str = "湖南";
-    const HUBEI: &'static str = "湖北";
-    const JIANGXI: &'static str = "江西";
-    const ZHEJIANG: &'static str = "浙江";
-    const SICHUAN: &'static str = "四川";
-    const XIZANG: &'static str = "西藏";
-    const QINGHAI: &'static str = "青海";
-    const XINJIANG: &'static str = "新疆";
-    const GANSU: &'static str = "甘肃";
-    const NINGXIA: &'static str = "宁夏";
-    const NEIMENGGU: &'static str = "内蒙古";
-    const SHANXI_SHAN: &'static str = "陕西";
-    const JIANGSU: &'static str = "江苏";
-    const HEILONGJIANG: &'static str = "黑龙江";
-    const JILIN: &'static str = "吉林";
-    const LIAONING: &'static str = "辽宁";
-    const YUNNAN: &'static str = "云南";
+    const HENAN: &str = "河南";
+    const HEBEI: &str = "河北";
+    const SHANXI_JIN: &str = "山西";
+    const SHANDONG: &str = "山东";
+    const GUANGXI: &str = "广西";
+    const GUANGDONG: &str = "广东";
+    const FUJIAN: &str = "福建";
+    const ANHUI: &str = "安徽";
+    const GUIZHOU: &str = "贵州";
+    const HAINAN: &str = "海南";
+    const HUNAN: &str = "湖南";
+    const HUBEI: &str = "湖北";
+    const JIANGXI: &str = "江西";
+    const ZHEJIANG: &str = "浙江";
+    const SICHUAN: &str = "四川";
+    const XIZANG: &str = "西藏";
+    const QINGHAI: &str = "青海";
+    const XINJIANG: &str = "新疆";
+    const GANSU: &str = "甘肃";
+    const NINGXIA: &str = "宁夏";
+    const NEIMENGGU: &str = "内蒙古";
+    const SHANXI_SHAN: &str = "陕西";
+    const JIANGSU: &str = "江苏";
+    const HEILONGJIANG: &str = "黑龙江";
+    const JILIN: &str = "吉林";
+    const LIAONING: &str = "辽宁";
+    const YUNNAN: &str = "云南";
     // 直辖市
-    const CHONGQING: &'static str = "重庆";
-    const BEIJING: &'static str = "北京";
-    const SHANGHAI: &'static str = "上海";
-    const TIANJIN: &'static str = "天津";
+    const CHONGQING: &str = "重庆";
+    const BEIJING: &str = "北京";
+    const SHANGHAI: &str = "上海";
+    const TIANJIN: &str = "天津";
     // 港澳台
-    const XIANGGANG: &'static str = "香港";
-    const AOMEN: &'static str = "澳门";
-    const TAIWAN: &'static str = "台湾";
+    const XIANGGANG: &str = "香港";
+    const AOMEN: &str = "澳门";
+    const TAIWAN: &str = "台湾";
 
-    const NONE: &'static str = "";
+    const NONE: &str = "";
 
     pub fn to_name(code: &str) -> String {
         match code {
