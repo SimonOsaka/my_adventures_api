@@ -34,10 +34,7 @@ pub struct NewMyAdventures {
 
 impl From<domain::AdventureContent> for NewMyAdventures {
     fn from(content: domain::AdventureContent) -> Self {
-        Self {
-            title: content.title,
-            image_url: content.image_url,
-        }
+        Self { title: content.title, image_url: content.image_url }
     }
 }
 

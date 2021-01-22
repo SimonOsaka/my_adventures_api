@@ -32,18 +32,12 @@ pub fn create_users2(repo: &Repository, num_users: i32) -> Vec<(realworld_domain
 
 pub fn create_user2(repo: &Repository) -> (realworld_domain::User, String) {
     let (new_user, password) = generate::new_user();
-    let new_user = repo
-        .sign_up(new_user)
-        .expect("Failed to create user")
-        .into();
+    let new_user = repo.sign_up(new_user).expect("Failed to create user").into();
     (new_user, password)
 }
 
 pub fn create_articles(repo: &Repo, users: Vec<User>) -> Vec<Article> {
-    users
-        .iter()
-        .map(|user| create_article(repo, &user))
-        .collect::<Vec<_>>()
+    users.iter().map(|user| create_article(repo, &user)).collect::<Vec<_>>()
 }
 
 pub fn create_article(repo: &Repo, user: &User) -> Article {

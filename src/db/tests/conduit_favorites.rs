@@ -61,10 +61,7 @@ fn favorites_works() {
         assert!(favorites::is_favorite(&repo, fan.id, &article.slug).unwrap());
     }
 
-    assert_eq!(
-        n_fans as i64,
-        favorites::n_favorites(&repo, &article.slug).unwrap()
-    );
+    assert_eq!(n_fans as i64, favorites::n_favorites(&repo, &article.slug).unwrap());
 
     for (fan, _) in &fans {
         favorites::unfavorite(&repo, fan.id, &article.slug).expect("Failed to fav article");

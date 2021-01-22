@@ -12,10 +12,7 @@ pub struct AdventuresInsertReq {
 
 impl From<AdventuresInsertReq> for domain::AdventureContent {
     fn from(req: AdventuresInsertReq) -> Self {
-        Self {
-            title: req.title,
-            image_url: req.image_url,
-        }
+        Self { title: req.title, image_url: req.image_url }
     }
 }
 
@@ -28,7 +25,7 @@ pub async fn insert_adventure(
     let repository = &state.repository;
     let id: u64 = repository.insert_adventure(body.into()).await.unwrap();
 
-    let response = InsertResponse { id: id };
+    let response = InsertResponse { id };
 
     debug!("response: {:?}", &response);
     Ok(warp::reply::json(&response))

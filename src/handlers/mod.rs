@@ -3,7 +3,7 @@ pub mod index;
 pub mod adventures;
 
 pub mod my_date_format {
-    use chrono::{DateTime, Utc, TimeZone};
+    use chrono::{DateTime, TimeZone, Utc};
     use serde::{self, Deserialize, Deserializer, Serializer};
 
     const FORMAT: &str = "%Y-%m-%d %H:%M:%S";

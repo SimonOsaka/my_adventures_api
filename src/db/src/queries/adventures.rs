@@ -1,10 +1,10 @@
-use crate::models::{ MyAdventures, NewMyAdventures, UpdateMyAdventures};
+use crate::models::{MyAdventures, NewMyAdventures, UpdateMyAdventures};
 use crate::Repo;
 use anyhow::Result;
-use sqlx::Error;
 use domain;
 use domain::{AdventuresQuery, PlayListQuery};
 use sqlx::Done;
+use sqlx::Error;
 
 #[cfg(any(feature = "mysql"))]
 pub type SqlDone = sqlx::mysql::MySqlDone;
@@ -20,8 +20,8 @@ pub async fn insert(repo: &Repo, adventures_new: NewMyAdventures) -> Result<u64,
         adventures_new.title,
         adventures_new.image_url
     )
-        .execute(&mut transaction)
-        .await?;
+    .execute(&mut transaction)
+    .await?;
 
     let entity_id = sqlx::query_as!(crate::models::EntityId, "SELECT LAST_INSERT_ID() as id")
         .fetch_one(&mut transaction)
@@ -44,8 +44,8 @@ pub async fn insert(repo: &Repo, adventures_new: NewMyAdventures) -> Result<i64,
         adventures_new.title,
         adventures_new.image_url
     )
-        .fetch_one(&repo.connection_pool)
-        .await?;
+    .fetch_one(&repo.connection_pool)
+    .await?;
 
     debug!("new adventures id: {:?}", rec.id);
 
@@ -60,8 +60,8 @@ pub async fn update(repo: &Repo, adventures_update: UpdateMyAdventures) -> Resul
         adventures_update.image_url,
         adventures_update.id
     )
-        .execute(&repo.connection_pool)
-        .await?;
+    .execute(&repo.connection_pool)
+    .await?;
 
     Ok(d.rows_affected() > 0)
 }
@@ -74,41 +74,34 @@ pub async fn update(repo: &Repo, adventures_update: UpdateMyAdventures) -> Resul
         adventures_update.image_url,
         adventures_update.id
     )
-        .execute(&repo.connection_pool)
-        .await?;
+    .execute(&repo.connection_pool)
+    .await?;
 
     Ok(d.rows_affected() > 0)
 }
 
 #[cfg(any(feature = "mysql"))]
 pub async fn delete(repo: &Repo, _id: u64) -> Result<bool, Error> {
-    let d: SqlDone = sqlx::query!(
-        "UPDATE my_adventures SET is_deleted=1 WHERE is_deleted = 0 and id = ?",
-        _id
-    )
-        .execute(&repo.connection_pool)
-        .await?;
+    let d: SqlDone =
+        sqlx::query!("UPDATE my_adventures SET is_deleted=1 WHERE is_deleted = 0 and id = ?", _id)
+            .execute(&repo.connection_pool)
+            .await?;
 
     Ok(d.rows_affected() > 0)
 }
 
 #[cfg(any(feature = "postgres"))]
 pub async fn delete(repo: &Repo, _id: i64) -> Result<bool, Error> {
-    let d: SqlDone = sqlx::query!(
-        "UPDATE my_adventures SET is_deleted=1 WHERE is_deleted = 0 and id = $1",
-        _id
-    )
-        .execute(&repo.connection_pool)
-        .await?;
+    let d: SqlDone =
+        sqlx::query!("UPDATE my_adventures SET is_deleted=1 WHERE is_deleted = 0 and id = $1", _id)
+            .execute(&repo.connection_pool)
+            .await?;
 
     Ok(d.rows_affected() > 0)
 }
 
 #[cfg(any(feature = "mysql"))]
-pub async fn find_latest(
-    repo: &Repo,
-    query: AdventuresQuery,
-) -> Result<Vec<MyAdventures>, Error> {
+pub async fn find_latest(repo: &Repo, query: AdventuresQuery) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE is_deleted = 0 ORDER BY id DESC LIMIT ?, ?",
@@ -122,10 +115,7 @@ pub async fn find_latest(
 }
 
 #[cfg(any(feature = "postgres"))]
-pub async fn find_latest(
-    repo: &Repo,
-    query: AdventuresQuery,
-) -> Result<Vec<MyAdventures>, Error> {
+pub async fn find_latest(repo: &Repo, query: AdventuresQuery) -> Result<Vec<MyAdventures>, Error> {
     let my_adventures = sqlx::query_as!(
         MyAdventures,
         r#"
@@ -143,8 +133,8 @@ pub async fn find_latest(
         query.limit.unwrap() as i64,
         query.offset.unwrap() as i64
     )
-        .fetch_all(&repo.connection_pool)
-        .await?;
+    .fetch_all(&repo.connection_pool)
+    .await?;
 
     Ok(my_adventures)
 }
@@ -169,8 +159,8 @@ pub async fn find_by_item_type(
         query.offset,
         query.limit
     )
-        .fetch_all(&repo.connection_pool)
-        .await?;
+    .fetch_all(&repo.connection_pool)
+    .await?;
 
     Ok(my_adventures)
 }
@@ -198,8 +188,8 @@ pub async fn find_by_item_type(
         query.limit.unwrap() as i64,
         query.offset.unwrap() as i64
     )
-        .fetch_all(&repo.connection_pool)
-        .await?;
+    .fetch_all(&repo.connection_pool)
+    .await?;
 
     Ok(my_adventures)
 }
@@ -239,8 +229,8 @@ pub async fn find_by_play_list(
         "#,
         query.play_list
     )
-        .fetch_all(&repo.connection_pool)
-        .await?;
+    .fetch_all(&repo.connection_pool)
+    .await?;
 
     Ok(my_adventures)
 }
@@ -273,8 +263,8 @@ pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, Erro
         "#,
         id as i64
     )
-        .fetch_optional(&repo.connection_pool)
-        .await?;
+    .fetch_optional(&repo.connection_pool)
+    .await?;
 
     Ok(my)
 }
@@ -300,8 +290,8 @@ pub async fn find_by_item_type_province(
         query.offset,
         query.limit
     )
-        .fetch_all(&repo.connection_pool)
-        .await?;
+    .fetch_all(&repo.connection_pool)
+    .await?;
 
     Ok(my_adventures)
 }

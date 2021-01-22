@@ -46,9 +46,7 @@ fn insert_and_retrieve_article() {
     let draft = generate::article_content();
 
     let expected_article = author.publish(draft, &repository).unwrap();
-    let retrieved_article = repository
-        .get_article_by_slug(&expected_article.slug)
-        .unwrap();
+    let retrieved_article = repository.get_article_by_slug(&expected_article.slug).unwrap();
     assert_eq!(expected_article, retrieved_article);
 }
 
@@ -65,14 +63,9 @@ fn update_and_retrieve_article() {
         description: Some(fake!(Lorem.paragraph(3, 10)).to_string()),
         body: Some(fake!(Lorem.paragraph(10, 5)).to_string()),
     };
-    let updated_article = author
-        .update_article(article, update.clone(), &repository)
-        .unwrap();
+    let updated_article = author.update_article(article, update.clone(), &repository).unwrap();
 
     assert_eq!(update.title, updated_article.content.title.into());
-    assert_eq!(
-        update.description,
-        updated_article.content.description.into()
-    );
+    assert_eq!(update.description, updated_article.content.description.into());
     assert_eq!(update.body, updated_article.content.body.into());
 }

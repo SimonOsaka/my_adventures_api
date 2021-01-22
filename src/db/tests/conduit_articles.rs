@@ -22,10 +22,7 @@ fn list_articles() {
 fn delete_article() {
     let repo = get_test_repo();
     let n_articles = 5;
-    let users: Vec<User> = create_users(&repo, n_articles)
-        .into_iter()
-        .map(|(u, _)| u)
-        .collect();
+    let users: Vec<User> = create_users(&repo, n_articles).into_iter().map(|(u, _)| u).collect();
     let articles = create_articles(&repo, users);
 
     let slug = articles[0].slug.clone();
@@ -72,17 +69,11 @@ fn tags_works() {
     let repo = get_test_repo();
 
     let n_articles = 10;
-    let users = create_users(&repo, n_articles)
-        .into_iter()
-        .map(|(u, _)| u)
-        .collect();
+    let users = create_users(&repo, n_articles).into_iter().map(|(u, _)| u).collect();
     let articles = create_articles(&repo, users);
 
-    let expected_tags: HashSet<String> = articles
-        .into_iter()
-        .map(|a| a.tag_list.into_iter())
-        .flatten()
-        .collect();
+    let expected_tags: HashSet<String> =
+        articles.into_iter().map(|a| a.tag_list.into_iter()).flatten().collect();
 
     let tags = articles::tags(&repo).unwrap();
 

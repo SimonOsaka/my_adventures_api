@@ -1,4 +1,4 @@
-use flexi_logger::{DeferredNow,Record};
+use flexi_logger::{DeferredNow, Record};
 use std::thread;
 
 pub fn logger_format(

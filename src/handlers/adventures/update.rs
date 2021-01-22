@@ -13,11 +13,7 @@ pub struct AdventuresUpdateReq {
 
 impl From<AdventuresUpdateReq> for domain::AdventuresUpdate {
     fn from(req: AdventuresUpdateReq) -> Self {
-        Self {
-            id: req.id,
-            title: req.title,
-            image_url: req.image_url,
-        }
+        Self { id: req.id, title: req.title, image_url: req.image_url }
     }
 }
 
@@ -30,10 +26,7 @@ pub async fn update_adventure(
     let repository = &state.repository;
     let id = query.id;
     let updated: bool = repository.update_adventure(query.into()).await.unwrap();
-    let response = UpdatedResponse {
-        id: id,
-        updated: updated,
-    };
+    let response = UpdatedResponse { id, updated };
 
     debug!("response: {:?}", &response);
     Ok(warp::reply::json(&response))

@@ -27,10 +27,7 @@ pub async fn start() {
 
     let jwt_secret = env::var("JWT_SECRET").expect("JWT_SECRET must be set");
 
-    let app_state = std::sync::Arc::new(AppStateRaw {
-        repository,
-        jwt_secret,
-    });
+    let app_state = std::sync::Arc::new(AppStateRaw { repository, jwt_secret });
 
     let routes = routes::routes(app_state).with(warp::log(APPLICATION_NAME));
 

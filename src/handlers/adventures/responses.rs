@@ -35,10 +35,7 @@ impl From<Vec<domain::Adventures>> for AdventuresResponse {
                 district: a.district,
             })
             .collect();
-        Self {
-            adventures,
-            adventures_count,
-        }
+        Self { adventures, adventures_count }
     }
 }
 

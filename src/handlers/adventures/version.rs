@@ -15,12 +15,8 @@ pub async fn version_update_adventures(
     debug!("token: {:?}, query: {:?}", token, query);
 
     if query.appid != "__UNI__410C039" && query.appid != "HBuilder" {
-        let response = VersionUpdateResponse {
-            is_update: false,
-            note: None,
-            i_os: None,
-            android: None,
-        };
+        let response =
+            VersionUpdateResponse { is_update: false, note: None, i_os: None, android: None };
         Ok(warp::reply::json(&response))
     } else {
         let mut is_update: bool = false;
@@ -32,12 +28,7 @@ pub async fn version_update_adventures(
             android = Some("http://dl.jicu.vip/adventures_20201210.apk".to_string());
         }
 
-        let response = VersionUpdateResponse {
-            is_update,
-            note,
-            i_os: None,
-            android,
-        };
+        let response = VersionUpdateResponse { is_update, note, i_os: None, android };
         debug!("response: {:?}", &response);
         Ok(warp::reply::json(&response))
     }

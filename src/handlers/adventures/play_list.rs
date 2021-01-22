@@ -8,16 +8,10 @@ pub async fn play_list_adventures(
     token: Option<String>,
     state: AppState,
 ) -> Result<impl warp::Reply, Infallible> {
-    debug!(
-        "token: {:?}, play_list: {:?}, state: {:?}",
-        token, play_list, state
-    );
+    debug!("token: {:?}, play_list: {:?}, state: {:?}", token, play_list, state);
     let repository = &state.repository;
     let query = domain::PlayListQuery { play_list };
-    let adventures = repository
-        .find_adventures_by_play_list(query)
-        .await
-        .unwrap();
+    let adventures = repository.find_adventures_by_play_list(query).await.unwrap();
     let response = AdventuresResponse::from(adventures);
 
     debug!("response: {:?}", &response);

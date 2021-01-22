@@ -101,19 +101,15 @@ impl domain::repositories::Repository for Repository {
         &self,
         update: domain::AdventuresUpdate,
     ) -> Result<bool, DatabaseError> {
-        let updated: bool = adventures::update(&self.0, update.into())
-            .await
-            .map_err(to_db_error)
-            .unwrap();
+        let updated: bool =
+            adventures::update(&self.0, update.into()).await.map_err(to_db_error).unwrap();
 
         Ok(updated)
     }
 
     async fn delete_adventure(&self, _id: u64) -> Result<bool, DatabaseError> {
-        let deleted = adventures::delete(&self.0, convert_id_u64(_id))
-            .await
-            .map_err(to_db_error)
-            .unwrap();
+        let deleted =
+            adventures::delete(&self.0, convert_id_u64(_id)).await.map_err(to_db_error).unwrap();
 
         Ok(deleted)
     }
@@ -130,10 +126,7 @@ impl domain::repositories::Repository for Repository {
         &self,
         id: u64,
     ) -> Result<Option<domain::Adventures>, DatabaseError> {
-        let my = adventures::find_one(&self.0, id)
-            .await
-            .map_err(to_db_error)
-            .unwrap();
+        let my = adventures::find_one(&self.0, id).await.map_err(to_db_error).unwrap();
 
         let result = match my {
             Some(ad) => Some(domain::Adventures {

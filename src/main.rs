@@ -10,9 +10,9 @@ mod app;
 mod auth;
 mod errors;
 mod handlers;
+mod logger;
 mod response;
 mod routes;
-mod logger;
 
 #[tokio::main]
 async fn main() {
@@ -26,11 +26,7 @@ async fn main() {
         .duplicate_to_stdout(Duplicate::All)
         .duplicate_to_stderr(Duplicate::Warn)
         .format(crate::logger::logger_format)
-        .rotate(
-            Criterion::Age(Age::Day),
-            Naming::Timestamps,
-            Cleanup::KeepLogFiles(7),
-        )
+        .rotate(Criterion::Age(Age::Day), Naming::Timestamps, Cleanup::KeepLogFiles(7))
         .append()
         .start()
         .unwrap();
