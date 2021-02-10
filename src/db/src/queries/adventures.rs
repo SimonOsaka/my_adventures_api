@@ -3,14 +3,13 @@ use crate::Repo;
 use anyhow::Result;
 use domain;
 use domain::{AdventuresQuery, PlayListQuery};
-use sqlx::Done;
 use sqlx::Error;
 
 #[cfg(any(feature = "mysql"))]
 pub type SqlDone = sqlx::mysql::MySqlDone;
 
 #[cfg(any(feature = "postgres"))]
-pub type SqlDone = sqlx::postgres::PgDone;
+pub type SqlDone = sqlx::postgres::PgQueryResult;
 
 #[cfg(any(feature = "mysql"))]
 pub async fn insert(repo: &Repo, adventures_new: NewMyAdventures) -> Result<u64, Error> {

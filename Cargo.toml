@@ -12,10 +12,10 @@ log = "0.4"
 jsonwebtoken = "7.2.0"
 serde = "1.0.114"
 serde_derive = "1.0.114"
-tokio = { version = "0.2.22", features = ["macros"] }
+tokio = { version = "1", features = ["macros"] }
 uuid = { version = "0.8.1", features = ["serde", "v4"] }
 async-trait = "0.1"
-warp = "0.2.5"
+warp = "0.3"
 
 db = { package = "realworld-db", path = "./src/db" }
 domain = { package = "realworld-domain", path = "./src/domain" }
