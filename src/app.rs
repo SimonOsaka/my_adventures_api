@@ -1,12 +1,13 @@
 use std::env;
 use std::net::SocketAddr;
 
-use warp::{self, Filter};
-
 use crate::routes;
 use db::{connection::Repo, Repository};
+use warp::http::HeaderValue;
+use warp::{self, Filter};
 
 const APPLICATION_NAME: &str = env!("CARGO_PKG_NAME");
+const IP_NONE: &str = "ip_none";
 
 #[derive(Clone, Debug)]
 pub struct AppStateRaw {
@@ -29,7 +30,24 @@ pub async fn start() {
 
     let app_state = std::sync::Arc::new(AppStateRaw { repository, jwt_secret });
 
-    let routes = routes::routes(app_state).with(warp::log(APPLICATION_NAME));
+    // custom log format
+    // pass x-real-ip from nginx
+    let log = warp::log::custom(|info| {
+        info!(
+            target: APPLICATION_NAME,
+            "{:?} \"{} {} {:?}\" {} \"{}\" \"{}\" {:?}",
+            info.request_headers().get("x-real-ip").unwrap_or(&HeaderValue::from_static(IP_NONE)),
+            info.method(),
+            info.path(),
+            info.version(),
+            info.status().as_u16(),
+            info.referer().unwrap_or("-"),
+            info.user_agent().unwrap_or("-"),
+            info.elapsed(),
+        );
+    });
+
+    let routes = routes::routes(app_state).with(log);
 
     println!("You can access the server at {}", bind_address);
 
