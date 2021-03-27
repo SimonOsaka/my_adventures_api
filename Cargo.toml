@@ -5,13 +5,13 @@ authors = ["许忠亮 <geniusmickymouse@qq.com>"]
 edition = "2018"
 
 [dependencies]
-chrono = "0.4.13"
+chrono = "0.4.19"
 dotenv = "0.15.0"
-flexi_logger = "0.16"
+flexi_logger = "0.17"
 log = "0.4"
 jsonwebtoken = "7.2.0"
-serde = "1.0.114"
-serde_derive = "1.0.114"
+serde = "1.0.125"
+serde_derive = "1.0.125"
 tokio = { version = "1", features = ["macros"] }
 uuid = { version = "0.8.1", features = ["serde", "v4"] }
 async-trait = "0.1"

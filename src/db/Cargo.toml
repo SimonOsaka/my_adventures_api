@@ -15,13 +15,13 @@ path = "src/lib.rs"
 
 [dependencies]
 sqlx = { version = "0.5", default-features = false, features = [ "runtime-tokio-rustls", "macros", "chrono" ] }
-serde = { version= "1.0.114", features = ["derive"] }
-chrono = { version = "0.4.13", features = ["serde"] }
+serde = { version= "1.0.125", features = ["derive"] }
+chrono = { version = "0.4.19", features = ["serde"] }
 # uuid = { version = "0.7.4", features = ["serde", "v4"] }
 domain = { package = "realworld-domain", path = "../domain" }
-anyhow = "1.0.32"
+anyhow = "1.0.40"
 async-trait = "0.1"
-flexi_logger = "0.16"
+flexi_logger = "0.17.1"
 log = "0.4"
 
 [dev-dependencies]
