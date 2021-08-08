@@ -13,6 +13,10 @@ pub fn to_db_error(e: Error) -> DatabaseError {
     DatabaseError::from(oe)
 }
 
+pub fn to_db_error1(e: anyhow::Error) -> DatabaseError {
+    DatabaseError::from(e)
+}
+
 #[derive(Clone, Debug)]
 pub struct Repository(pub Repo);
 
@@ -22,28 +26,9 @@ impl domain::repositories::Repository for Repository {
         &self,
         query: domain::AdventuresQuery,
     ) -> Result<Vec<domain::Adventures>, DatabaseError> {
-        let my_list_result;
-        if query.item_id != 0 {
-            match query.province_key.as_ref() {
-                // 字符串变量存在
-                Some(pv) => {
-                    if pv.len() > 0 {
-                        //非空字符串
-                        my_list_result =
-                            adventures::find_by_item_type_province(&self.0, query).await;
-                    } else {
-                        //空字符串
-                        my_list_result = adventures::find_by_item_type(&self.0, query).await;
-                    }
-                }
-                // 字符串变量不存在
-                _ => my_list_result = adventures::find_by_item_type(&self.0, query).await,
-            }
-        } else {
-            my_list_result = adventures::find_latest(&self.0, query).await;
-        }
+        let my_list_result = adventures::find_latest(&self.0, query).await;
         let result: Vec<domain::Adventures> = my_list_result
-            .map_err(to_db_error)
+            .map_err(to_db_error1)
             .unwrap()
             .into_iter()
             .map(|m| domain::Adventures {

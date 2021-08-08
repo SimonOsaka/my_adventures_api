@@ -23,6 +23,7 @@ anyhow = "1.0.40"
 async-trait = "0.1"
 flexi_logger = "0.17.1"
 log = "0.4"
+sql-builder = "3.1.1"
 
 [dev-dependencies]
 fake = "1.2.2"
