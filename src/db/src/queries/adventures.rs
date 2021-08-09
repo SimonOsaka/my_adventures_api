@@ -1,10 +1,12 @@
 use crate::models::{MyAdventures, NewMyAdventures, UpdateMyAdventures};
+use crate::queries::SqlParam;
 use crate::Repo;
 use anyhow::Result;
 use domain;
 use domain::{AdventuresQuery, PlayListQuery};
-use sql_builder::{qname, SqlBuilder, SqlName};
-use sqlx::Error;
+use sql_builder::SqlBuilder;
+use sqlx::postgres::PgArguments;
+use sqlx::{Arguments, Error};
 
 #[cfg(any(feature = "mysql"))]
 pub type SqlDone = sqlx::mysql::MySqlDone;
@@ -126,6 +128,8 @@ pub async fn find_latest(
             "district",
         ])
         .and_where_eq("is_deleted", 0);
+    let mut fetch_args = PgArguments::default();
+    let mut p = SqlParam::new();
 
     if query.item_id != 0 {
         match query.province_key.as_ref() {
@@ -133,25 +137,31 @@ pub async fn find_latest(
             Some(pv) => {
                 if pv.len() > 0 {
                     pgsql_builder
-                        .and_where_eq("item_type", query.item_id as i16)
-                        .and_where_eq("journey_destiny", qname!(query.province_key.unwrap()));
+                        .and_where_eq("item_type", &p.sql_placeholder())
+                        .and_where_eq("journey_destiny", &p.sql_placeholder());
+                    fetch_args.add(query.item_id as i16);
+                    fetch_args.add(query.province_key.unwrap());
                 } else {
-                    pgsql_builder.and_where_eq("item_type", query.item_id as i16);
+                    pgsql_builder.and_where_eq("item_type", &p.sql_placeholder());
+                    fetch_args.add(query.item_id as i16);
                 }
             }
             _ => {
-                pgsql_builder.and_where_eq("item_type", query.item_id as i16);
+                pgsql_builder.and_where_eq("item_type", &p.sql_placeholder());
+                fetch_args.add(query.item_id as i16);
             }
         }
     }
 
     let sql = pgsql_builder
         .order_desc("id")
-        .limit(query.limit.unwrap() as i64)
-        .offset(query.offset.unwrap() as i64)
+        .limit(&p.sql_placeholder())
+        .offset(&p.sql_placeholder())
         .sql()?;
-
-    let my_adventures = sqlx::query_as(&sql).fetch_all(&repo.connection_pool).await?;
+    fetch_args.add(query.limit.unwrap() as i64);
+    fetch_args.add(query.offset.unwrap() as i64);
+    let my_adventures =
+        sqlx::query_as_with(&sql, fetch_args).fetch_all(&repo.connection_pool).await?;
 
     Ok(my_adventures)
 }
