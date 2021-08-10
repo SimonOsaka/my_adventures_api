@@ -160,77 +160,67 @@ pub async fn find_latest(
     Ok(my_adventures)
 }
 
-#[cfg(any(feature = "mysql"))]
+#[cfg(any(feature = "postgres", feature = "mysql"))]
 pub async fn find_by_play_list(
     repo: &Repo,
     query: PlayListQuery,
-) -> Result<Vec<MyAdventures>, Error> {
-    let my_adventures = sqlx::query_as!(
-        MyAdventures,
-        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE is_deleted = 0 AND play_list = ?",
-        query.play_list
-    )
-        .fetch_all(&repo.connection_pool)
-        .await?;
-
+) -> Result<Vec<MyAdventures>, anyhow::Error> {
+    let mut param = SqlParam::new();
+    let mut sql_builder = SqlBuilder::select_from("my_adventures");
+    sql_builder
+        .fields(&[
+            "id",
+            "title",
+            "created_at",
+            "is_deleted",
+            "image_url",
+            "item_type",
+            "link",
+            "source",
+            "journey_destiny",
+            "script_content",
+            "play_list",
+            "address",
+            "shop_name",
+            "province,city",
+            "district",
+        ])
+        .and_where_eq("is_deleted", 0)
+        .and_where_eq("play_list", param.value(query.play_list));
+    let sql = sql_builder.sql()?;
+    let my_adventures =
+        sqlx::query_as_with(&sql, param.fetch_args()).fetch_all(&repo.connection_pool).await?;
     Ok(my_adventures)
 }
 
-#[cfg(any(feature = "postgres"))]
-pub async fn find_by_play_list(
-    repo: &Repo,
-    query: PlayListQuery,
-) -> Result<Vec<MyAdventures>, Error> {
-    let my_adventures = sqlx::query_as!(
-        MyAdventures,
-        r#"
-        SELECT
-            id,title,created_at,is_deleted,image_url,item_type,link,
-            source,journey_destiny,script_content,play_list,address,
-            shop_name,province,city,district
-        FROM
-            my_adventures
-        WHERE
-            is_deleted = 0 AND play_list = $1
-        "#,
-        query.play_list
-    )
-    .fetch_all(&repo.connection_pool)
-    .await?;
+#[cfg(any(feature = "postgres", feature = "mysql"))]
+pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, anyhow::Error> {
+    let mut param = SqlParam::new();
+    let mut sql_builder = SqlBuilder::select_from("my_adventures");
+    let sql = sql_builder
+        .fields(&[
+            "id",
+            "title",
+            "created_at",
+            "is_deleted",
+            "image_url",
+            "item_type",
+            "link",
+            "source",
+            "journey_destiny",
+            "script_content",
+            "play_list",
+            "address",
+            "shop_name",
+            "province",
+            "city",
+            "district",
+        ])
+        .and_where_eq("is_deleted", 0)
+        .and_where_eq("id", param.value(id as i64))
+        .sql()?;
 
-    Ok(my_adventures)
-}
-
-#[cfg(any(feature = "mysql"))]
-pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, Error> {
-    let my = sqlx::query_as!(
-        MyAdventures,
-        "SELECT id,title,created_at,is_deleted,image_url,item_type,link,source,journey_destiny,script_content,play_list,address FROM my_adventures WHERE id = ? and is_deleted = 0",
-        id
-    )
-        .fetch_optional(&repo.connection_pool)
-        .await?;
-
-    Ok(my)
-}
-
-#[cfg(any(feature = "postgres"))]
-pub async fn find_one(repo: &Repo, id: u64) -> Result<Option<MyAdventures>, Error> {
-    let my = sqlx::query_as!(
-        MyAdventures,
-        r#"
-        SELECT
-            id,title,created_at,is_deleted,image_url,item_type,link,
-            source,journey_destiny,script_content,play_list,address,
-            shop_name,province,city,district
-        FROM
-            my_adventures
-        WHERE id = $1 and is_deleted = 0
-        "#,
-        id as i64
-    )
-    .fetch_optional(&repo.connection_pool)
-    .await?;
-
+    let my =
+        sqlx::query_as_with(&sql, param.fetch_args()).fetch_optional(&repo.connection_pool).await?;
     Ok(my)
 }

@@ -3,7 +3,7 @@ use sqlx::Arguments;
 pub mod adventures;
 
 #[cfg(any(feature = "mysql"))]
-type SqlArguments1 = sqlx::mysql::MySqlArguments;
+type SqlArguments = sqlx::mysql::MySqlArguments;
 
 #[cfg(any(feature = "postgres"))]
 type SqlArguments = sqlx::postgres::PgArguments;

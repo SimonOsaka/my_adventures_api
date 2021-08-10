@@ -58,7 +58,7 @@ impl domain::repositories::Repository for Repository {
     ) -> Result<Vec<domain::Adventures>, DatabaseError> {
         let my_list_result = adventures::find_by_play_list(&self.0, query).await;
         let result: Vec<domain::Adventures> = my_list_result
-            .map_err(to_db_error)
+            .map_err(to_db_error1)
             .unwrap()
             .into_iter()
             .map(|m| domain::Adventures {
@@ -111,7 +111,7 @@ impl domain::repositories::Repository for Repository {
         &self,
         id: u64,
     ) -> Result<Option<domain::Adventures>, DatabaseError> {
-        let my = adventures::find_one(&self.0, id).await.map_err(to_db_error).unwrap();
+        let my = adventures::find_one(&self.0, id).await.map_err(to_db_error1).unwrap();
 
         let result = match my {
             Some(ad) => Some(domain::Adventures {
