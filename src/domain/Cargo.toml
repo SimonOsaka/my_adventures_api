@@ -1,11 +1,11 @@
 [package]
-name = "realworld-domain"
+name = "my_adventures-domain"
 version = "0.1.0"
-authors = ["colinbankier <colinbankier@gmail.com>", "LukeMathWalker <rust@lpalmieri.com>"]
+authors = ["SimonOsaka <geniusmickymouse@qq.com>"]
 edition = "2018"
 
 [lib]
-name = "realworld_domain"
+name = "my_adventures_domain"
 path = "src/lib.rs"
 
 [dependencies]
@@ -21,5 +21,5 @@ flexi_logger = "0.17"
 log = "0.4"
 
 [dev-dependencies]
-db = { package = "realworld-db", path = "../db" }
+db = { package = "my_adventures-db", path = "../db" }
 fake = "1.2.2"

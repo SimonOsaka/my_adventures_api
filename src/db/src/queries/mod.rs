@@ -37,3 +37,19 @@ impl SqlParam {
         self.args
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::queries::SqlParam;
+    use sql_builder::SqlBuilder;
+
+    #[test]
+    fn sql_delete_param() {
+        let mut sql_param = SqlParam::new();
+        let mut sql_builder = SqlBuilder::delete_from("table");
+
+        let sql = sql_builder.and_where_eq("id", sql_param.value(123)).sql().unwrap();
+        debug!("{:?}", &sql);
+        assert_eq!(sql, "DELETE FROM table WHERE id = $1;");
+    }
+}
