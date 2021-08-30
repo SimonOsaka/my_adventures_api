@@ -2,10 +2,11 @@
 	// See https://go.microsoft.com/fwlink/?LinkId=733558
 	// for the documentation about the extensions.json format
 	"recommendations": [
-        "matklad.rust-analyzer",
-        "serayuzgur.crates",
-        "bungcip.better-toml",
-        "vadimcn.vscode-lldb",
-		"gsppvo.vscode-commandbar"
+		"matklad.rust-analyzer",
+		"serayuzgur.crates",
+		"bungcip.better-toml",
+		"vadimcn.vscode-lldb",
+		"gsppvo.vscode-commandbar",
+		"kiteco.kite"
 	]
 }

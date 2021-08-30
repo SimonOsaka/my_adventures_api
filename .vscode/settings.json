@@ -1,0 +1,6 @@
+{
+    "editor.fontFamily": "'Jetbrains Mono', 'Courier New'",
+    "workbench.colorCustomizations": {
+        "editor.background": "#C7EDCC",
+    },
+}
