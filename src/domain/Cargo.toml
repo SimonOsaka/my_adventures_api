@@ -9,7 +9,7 @@ name = "my_adventures_domain"
 path = "src/lib.rs"
 
 [dependencies]
-serde = { version= "1.0.125", features = ["derive"] }
+serde = { version = "1.0.125", features = ["derive"] }
 chrono = { version = "0.4.19", features = ["serde"] }
 # uuid = { version = "=0.7.4", features = ["serde", "v4"] }
 itertools = "0.9.0"
@@ -17,7 +17,7 @@ thiserror = "1.0.20"
 bcrypt = "0.8.1"
 anyhow = "1.0.40"
 async-trait = "0.1"
-flexi_logger = "0.17"
+flexi_logger = "0.19.3"
 log = "0.4"
 
 [dev-dependencies]

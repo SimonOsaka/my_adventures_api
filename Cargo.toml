@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 chrono = "0.4.19"
 dotenv = "0.15.0"
-flexi_logger = "0.17"
+flexi_logger = "0.19.3"
 log = "0.4"
 jsonwebtoken = "7.2.0"
 serde = "1.0.125"
